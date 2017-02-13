@@ -39,14 +39,15 @@ describe('Introduction to Mocha Tests - READ ME FIRST', function() {
   it('Throws an error when expected behavior does not match actual behavior', function() {
     var even = function(num){
       return num % 2 === 0;
-    }
+    };
 
     even(10).should.equal(true);
-   // if(even(10) !== true) {
-    //  throw new Error('10 should be even!');
-    //}
+    if(even(10) !== true) {
+      throw new Error('10 should be even!');
+    }
   });
 });
+/*
 describe('Diner\'s Club', function() {
   var should = chai.should();
 
@@ -121,16 +122,6 @@ describe('MasterCard', function() {
     detectNetwork('5512345678901234').should.equal('MasterCard');
   });
 
-
-  // You can also use should instead of expect, which changes the style
-  // slightly. It really doesn't matter which one you use - check out
-  // http://chaijs.com/guide/styles/ for more info, but it's important
-  // to be consistent (unlike in this file, where we use BOTH expect
-  // and should, but that's just for learning), so once you've gotten
-  // these tests to pass using should syntax, refactor your tests to
-  // use either expect or should, but not both.
-  var should = chai.should();
-
   it('has a prefix of 54 and a length of 16', function() {
     detectNetwork('5412345678901234').should.equal('MasterCard');
   });
@@ -195,17 +186,17 @@ describe('China UnionPay', function() {
 
   for(var length = 16; length <= 19; length++) {
     (function(length) {
-      for(var prefix = 622126; prefix < 622295; prefix++) {
+      for(var prefix = 622126; prefix <= 622295; prefix++) {
         it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
           detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal('China UnionPay');
         });
       }
-      for(var prefix = 624; prefix < 626; prefix++) {
+      for(var prefix = 624; prefix <= 626; prefix++) {
         it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
           detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal('China UnionPay');
         });
       }
-      for(var prefix = 6282; prefix < 6288; prefix++) {
+      for(var prefix = 6282; prefix <= 6288; prefix++) {
         it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
           detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal('China UnionPay');
         });
@@ -227,5 +218,979 @@ describe('Switch', function() {
       });
     })(i)
   }
+});
+*/
+describe('Diner\'s Club', function() {
+  var should = chai.should();
+  var network = 'Diners\'s Club';
 
+  for(var length = 12; length <= 19; length++) {
+    (function(length) {
+      ['5018', '5020', '5038', '6304'].forEach(function(prefix) {
+        it('has a prefix of ' + prefix + ' and a length of ' + length.toString(), function() {
+          if(network === 'Maestro') {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.equal(network);
+          } else {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.not.equal(network);
+          }
+        });
+      });
+      if(length >= 16) {
+        for(var prefix = 622126; prefix <= 622295; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 624; prefix <= 626; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 6282; prefix <= 6288; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if(length === 14) {
+        ['38', '39'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Diner\'s Club') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 15) {
+        ['34', '37'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'American Express') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 16) {
+        for(var prefix = 51; prefix <= 55; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'MasterCard') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([13, 16, 19].includes(length)) {
+        var prefix = 4;
+        it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+          if(network === 'Visa') {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+          } else {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+          }
+        });
+      }
+      if([16, 19].includes(length)) {
+        ['65', '6011'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+        for(var prefix = 644; prefix <= 649; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([16, 18, 19].includes(length)) {
+        ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Switch') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+    })(length)
+  }
+});
+
+describe('American Express', function() {
+  var should = chai.should();
+  var network = 'American Express';
+
+  for(var length = 12; length <= 19; length++) {
+    (function(length) {
+      ['5018', '5020', '5038', '6304'].forEach(function(prefix) {
+        it('has a prefix of ' + prefix + ' and a length of ' + length.toString(), function() {
+          if(network === 'Maestro') {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.equal(network);
+          } else {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.not.equal(network);
+          }
+        });
+      });
+      if(length >= 16) {
+        for(var prefix = 622126; prefix <= 622295; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 624; prefix <= 626; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 6282; prefix <= 6288; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if(length === 14) {
+        ['38', '39'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Diner\'s Club') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 15) {
+        ['34', '37'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'American Express') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 16) {
+        for(var prefix = 51; prefix <= 55; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'MasterCard') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([13, 16, 19].includes(length)) {
+        var prefix = 4;
+        it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+          if(network === 'Visa') {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+          } else {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+          }
+        });
+      }
+      if([16, 19].includes(length)) {
+        ['65', '6011'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+        for(var prefix = 644; prefix <= 649; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([16, 18, 19].includes(length)) {
+        ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Switch') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+    })(length)
+  }
+});
+
+describe('Visa', function() {
+  var should = chai.should();
+  var network = 'Visa';
+
+  for(var length = 12; length <= 19; length++) {
+    (function(length) {
+      ['5018', '5020', '5038', '6304'].forEach(function(prefix) {
+        it('has a prefix of ' + prefix + ' and a length of ' + length.toString(), function() {
+          if(network === 'Maestro') {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.equal(network);
+          } else {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.not.equal(network);
+          }
+        });
+      });
+      if(length >= 16) {
+        for(var prefix = 622126; prefix <= 622295; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 624; prefix <= 626; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 6282; prefix <= 6288; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if(length === 14) {
+        ['38', '39'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Diner\'s Club') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 15) {
+        ['34', '37'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'American Express') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 16) {
+        for(var prefix = 51; prefix <= 55; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'MasterCard') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([13, 16, 19].includes(length)) {
+        var prefix = 4;
+        it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+          if(network === 'Visa') {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+          } else {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+          }
+        });
+      }
+      if([16, 19].includes(length)) {
+        ['65', '6011'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+        for(var prefix = 644; prefix <= 649; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([16, 18, 19].includes(length)) {
+        ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Switch') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+    })(length)
+  }
+});
+
+describe('MasterCard', function() {
+  var should = chai.should();
+  var network = 'MasterCard';
+
+  for(var length = 12; length <= 19; length++) {
+    (function(length) {
+      ['5018', '5020', '5038', '6304'].forEach(function(prefix) {
+        it('has a prefix of ' + prefix + ' and a length of ' + length.toString(), function() {
+          if(network === 'Maestro') {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.equal(network);
+          } else {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.not.equal(network);
+          }
+        });
+      });
+      if(length >= 16) {
+        for(var prefix = 622126; prefix <= 622295; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 624; prefix <= 626; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 6282; prefix <= 6288; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if(length === 14) {
+        ['38', '39'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Diner\'s Club') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 15) {
+        ['34', '37'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'American Express') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 16) {
+        for(var prefix = 51; prefix <= 55; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'MasterCard') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([13, 16, 19].includes(length)) {
+        var prefix = 4;
+        it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+          if(network === 'Visa') {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+          } else {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+          }
+        });
+      }
+      if([16, 19].includes(length)) {
+        ['65', '6011'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+        for(var prefix = 644; prefix <= 649; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([16, 18, 19].includes(length)) {
+        ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Switch') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+    })(length)
+  }
+});
+
+describe('Discover', function() {
+  var should = chai.should();
+  var network = 'Discover';
+
+  for(var length = 12; length <= 19; length++) {
+    (function(length) {
+      ['5018', '5020', '5038', '6304'].forEach(function(prefix) {
+        it('has a prefix of ' + prefix + ' and a length of ' + length.toString(), function() {
+          if(network === 'Maestro') {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.equal(network);
+          } else {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.not.equal(network);
+          }
+        });
+      });
+      if(length >= 16) {
+        for(var prefix = 622126; prefix <= 622295; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 624; prefix <= 626; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 6282; prefix <= 6288; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if(length === 14) {
+        ['38', '39'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Diner\'s Club') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 15) {
+        ['34', '37'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'American Express') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 16) {
+        for(var prefix = 51; prefix <= 55; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'MasterCard') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([13, 16, 19].includes(length)) {
+        var prefix = 4;
+        it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+          if(network === 'Visa') {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+          } else {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+          }
+        });
+      }
+      if([16, 19].includes(length)) {
+        ['65', '6011'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+        for(var prefix = 644; prefix <= 649; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([16, 18, 19].includes(length)) {
+        ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Switch') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+    })(length)
+  }
+});
+
+describe('Maestro', function() {
+  var should = chai.should();
+  var network = 'Maestro';
+
+  for(var length = 12; length <= 19; length++) {
+    (function(length) {
+      ['5018', '5020', '5038', '6304'].forEach(function(prefix) {
+        it('has a prefix of ' + prefix + ' and a length of ' + length.toString(), function() {
+          if(network === 'Maestro') {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.equal(network);
+          } else {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.not.equal(network);
+          }
+        });
+      });
+      if(length >= 16) {
+        for(var prefix = 622126; prefix <= 622295; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 624; prefix <= 626; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 6282; prefix <= 6288; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if(length === 14) {
+        ['38', '39'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Diner\'s Club') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 15) {
+        ['34', '37'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'American Express') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 16) {
+        for(var prefix = 51; prefix <= 55; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'MasterCard') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([13, 16, 19].includes(length)) {
+        var prefix = 4;
+        it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+          if(network === 'Visa') {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+          } else {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+          }
+        });
+      }
+      if([16, 19].includes(length)) {
+        ['65', '6011'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+        for(var prefix = 644; prefix <= 649; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([16, 18, 19].includes(length)) {
+        ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Switch') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+    })(length)
+  }
+});
+describe('China UnionPay', function() {
+  var should = chai.should();
+  var network = 'China UnionPay';
+
+  for(var length = 12; length <= 19; length++) {
+    (function(length) {
+      ['5018', '5020', '5038', '6304'].forEach(function(prefix) {
+        it('has a prefix of ' + prefix + ' and a length of ' + length.toString(), function() {
+          if(network === 'Maestro') {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.equal(network);
+          } else {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.not.equal(network);
+          }
+        });
+      });
+      if(length >= 16) {
+        for(var prefix = 622126; prefix <= 622295; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 624; prefix <= 626; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 6282; prefix <= 6288; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if(length === 14) {
+        ['38', '39'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Diner\'s Club') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 15) {
+        ['34', '37'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'American Express') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 16) {
+        for(var prefix = 51; prefix <= 55; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'MasterCard') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([13, 16, 19].includes(length)) {
+        var prefix = 4;
+        it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+          if(network === 'Visa') {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+          } else {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+          }
+        });
+      }
+      if([16, 19].includes(length)) {
+        ['65', '6011'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+        for(var prefix = 644; prefix <= 649; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([16, 18, 19].includes(length)) {
+        ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Switch') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+    })(length)
+  }
+});
+
+describe('Switch', function() {
+  var should = chai.should();
+  var network = 'Switch';
+
+  for(var length = 12; length <= 19; length++) {
+    (function(length) {
+      ['5018', '5020', '5038', '6304'].forEach(function(prefix) {
+        it('has a prefix of ' + prefix + ' and a length of ' + length.toString(), function() {
+          if(network === 'Maestro') {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.equal(network);
+          } else {
+            detectNetwork(prefix + addLength(length - prefix.length)).should.not.equal(network);
+          }
+        });
+      });
+      if(length >= 16) {
+        for(var prefix = 622126; prefix <= 622295; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 624; prefix <= 626; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+        for(var prefix = 6282; prefix <= 6288; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'China UnionPay') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if(length === 14) {
+        ['38', '39'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Diner\'s Club') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 15) {
+        ['34', '37'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'American Express') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+      if(length === 16) {
+        for(var prefix = 51; prefix <= 55; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'MasterCard') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([13, 16, 19].includes(length)) {
+        var prefix = 4;
+        it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+          if(network === 'Visa') {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+          } else {
+            detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+          }
+        });
+      }
+      if([16, 19].includes(length)) {
+        ['65', '6011'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+        for(var prefix = 644; prefix <= 649; prefix++) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Discover') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        }
+      }
+      if([16, 18, 19].includes(length)) {
+        ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'].forEach(function(prefix) {
+          it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
+            if(network === 'Switch') {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal(network);
+            } else {
+              detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.not.equal(network);
+            }
+          });
+        });
+      }
+    })(length)
+  }
 });
