@@ -51,7 +51,6 @@ var detectNetworkTest = function(network) {
         ['5018', '5020', '5038', '6304'].forEach(function(maestPrefix) {
           it('has a prefix of ' + maestPrefix + ' and a length of ' + length.toString(), function() {
             if(network === 'Maestro') {
-              //console.log(maestPrefix + addLength(length - maestPrefix.length));
               detectNetwork(maestPrefix + addLength(length - maestPrefix.length)).should.equal(network);
             } else {
               detectNetwork(maestPrefix + addLength(length - maestPrefix.length)).should.not.equal(network);
@@ -59,27 +58,37 @@ var detectNetworkTest = function(network) {
           });
         });
         if(length >= 16) {
-          for(var china6Prefix = 622126; china6Prefix < 622295; china6Prefix++) {
+          var china6PrefixArray = [];
+          for(var china6Prefix = 622126; china6Prefix <= 622295; china6Prefix++) {
+            china6PrefixArray.push(china6Prefix);
+          }
+          china6PrefixArray.forEach(function(china6Prefix) {
             it('has a prefix of ' + china6Prefix.toString() + ' and a length of ' + length.toString(), function() {
               if(network === 'China UnionPay') {
-                //console.log(china6Prefix.toString() + addLength(length - china6Prefix.toString().length));
                 detectNetwork(china6Prefix.toString() + addLength(length - china6Prefix.toString().length)).should.equal(network);
               } else {
                 detectNetwork(china6Prefix.toString() + addLength(length - china6Prefix.toString().length)).should.not.equal(network);
               }
             });
+          });
+          var china3PrefixArray = [];
+          for(var china3Prefix = 624; china3Prefix <= 626; china3Prefix++) {
+            china3PrefixArray.push(china3Prefix);
           }
-          for(var china3Prefix = 624; china3Prefix < 626; china3Prefix++) {
+          china3PrefixArray.forEach(function(china3Prefix) {
             it('has a prefix of ' + china3Prefix.toString() + ' and a length of ' + length.toString(), function() {
               if(network === 'China UnionPay') {
-                console.log(china3Prefix.toString() + addLength(length - china3Prefix.toString().length));
                 detectNetwork(china3Prefix.toString() + addLength(length - china3Prefix.toString().length)).should.equal(network);
               } else {
                 detectNetwork(china3Prefix.toString() + addLength(length - china3Prefix.toString().length)).should.not.equal(network);
               }
             });
+          });
+          var china4PrefixArray = [];
+          for(var china4Prefix = 6282; china4Prefix <= 6288; china4Prefix++) {
+            china4PrefixArray.push(china4Prefix);
           }
-          for(var china4Prefix = 6282; china4Prefix < 6288; china4Prefix++) {
+          china4PrefixArray.forEach(function(china4Prefix) {
             it('has a prefix of ' + china4Prefix.toString() + ' and a length of ' + length.toString(), function() {
               if(network === 'China UnionPay') {
                 detectNetwork(china4Prefix.toString() + addLength(length - china4Prefix.toString().length)).should.equal(network);
@@ -87,7 +96,7 @@ var detectNetworkTest = function(network) {
                 detectNetwork(china4Prefix.toString() + addLength(length - china4Prefix.toString().length)).should.not.equal(network);
               }
             });
-          }
+          });
         }
         if(length === 14) {
           ['38', '39'].forEach(function(dinerPrefix) {
@@ -112,7 +121,11 @@ var detectNetworkTest = function(network) {
           });
         }
         if(length === 16) {
-          for(var mcPrefix = 51; mcPrefix < 55; mcPrefix++) {
+          var mcPrefixArray = [];
+          for(var mcPrefix = 51; mcPrefix <= 55; mcPrefix++) {
+            mcPrefixArray.push(mcPrefix);
+          }
+          mcPrefixArray.forEach(function(mcPrefix) {
             it('has a prefix of ' + mcPrefix.toString() + ' and a length of ' + length.toString(), function() {
               if(network === 'MasterCard') {
                 detectNetwork(mcPrefix.toString() + addLength(length - mcPrefix.toString().length)).should.equal(network);
@@ -120,7 +133,7 @@ var detectNetworkTest = function(network) {
                 detectNetwork(mcPrefix.toString() + addLength(length - mcPrefix.toString().length)).should.not.equal(network);
               }
             });
-          }
+          });
         }
         if([13, 16, 19].includes(length)) {
           var visaPrefix = '4';
@@ -142,7 +155,11 @@ var detectNetworkTest = function(network) {
               }
             });
           });
-          for(var disc3Prefix = 644; disc3Prefix < 649; disc3Prefix++) {
+          var disc3PrefixArray = [];
+          for(var disc3Prefix = 644; disc3Prefix <= 649; disc3Prefix++) {
+            disc3PrefixArray.push(disc3Prefix);
+          }
+          disc3PrefixArray.forEach(function(disc3Prefix) {
             it('has a prefix of ' + disc3Prefix.toString() + ' and a length of ' + length.toString(), function() {
               if(network === 'Discover') {
                 detectNetwork(disc3Prefix.toString() + addLength(length - disc3Prefix.toString().length)).should.equal(network);
@@ -150,7 +167,7 @@ var detectNetworkTest = function(network) {
                 detectNetwork(disc3Prefix.toString() + addLength(length - disc3Prefix.toString().length)).should.not.equal(network);
               }
             });
-          }
+          });
         }
         if([16, 18, 19].includes(length)) {
           ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'].forEach(function(switchPrefix) {
