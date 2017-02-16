@@ -1,12 +1,3 @@
-/*
- * You'll eventually be given instructions how to use this file
- * If you want to use it before then, you'll have to figure it out yourself
- */
-
-// You don't actually want to fill *this* value in on line 9, but you'll see
-// other places in this file where you'll replace the FILL_ME_IN with a
-// different value.
-var FILL_ME_IN = 'Fill this value in';
 
 function addLength(num) {
   var lengthString = '';
@@ -16,37 +7,6 @@ function addLength(num) {
   return lengthString;
 }
 
-describe('Introduction to Mocha Tests - READ ME FIRST', function() {
-  // A Mocha test is just a function!
-  // If the function throws an error when run, it fails.
-  // If it doesn't throw an error when run, it doesn't fail.
-  // To read more about mocha, visit mochajs.org
-
-  // Once you've read and understood this section, please comment it out.
-  // You will not be able to proceed with a failing test.
-  var should = chai.should()
-  it('Doesn\'t throw an error, so it doesn\'t fail', function() {
-    // This test doesn't really test anything at all! It will pass no matter what.
-    var even = function(num){
-      return num % 2 === 0;
-    };
-
-    even(10).should.equal(true);
-  });
-
-  // In tests, we want to compare the expected behavior to the actual behavior.
-  // A test should only fail if the expected behavior doesn't match the actual.
-  it('Throws an error when expected behavior does not match actual behavior', function() {
-    var even = function(num){
-      return num % 2 === 0;
-    }
-
-    even(10).should.equal(true);
-   // if(even(10) !== true) {
-    //  throw new Error('10 should be even!');
-    //}
-  });
-});
 describe('Diner\'s Club', function() {
   var should = chai.should();
 
@@ -60,8 +20,6 @@ describe('Diner\'s Club', function() {
 });
 
 describe('American Express', function() {
-  // It can get annoying to keep typing the if/throw, so here is a
-  // helper function to throw an error if the input statement isn't true.
   var should = chai.should();
 
   it('has a prefix of 34 and a length of 15', function() {
@@ -74,10 +32,6 @@ describe('American Express', function() {
 });
 
 describe('Visa', function() {
-  // Chai is an entire library of helper functions for tests!
-  // Chai provides an assert that acts the same as our previous assert.
-  // Search the documentation to figure out how to access it.
-  //   http://chaijs.com/
   var should = chai.should();
 
 
@@ -95,10 +49,6 @@ describe('Visa', function() {
 });
 
 describe('MasterCard', function() {
-  // Chai lets you write more human-readable tests that throw helpful errors.
-  // Expect syntax is one way to do this, but there are others.
-  // If you want to know more, check out the documentation.
-  //   http://chaijs.com/api/bdd/
   var should = chai.should();
 
   it('has a prefix of 51 and a length of 16', function() {
@@ -120,25 +70,6 @@ describe('MasterCard', function() {
   it('has a prefix of 55 and a length of 16', function() {
     detectNetwork('5512345678901234').should.equal('MasterCard');
   });
-
-
-  // You can also use should instead of expect, which changes the style
-  // slightly. It really doesn't matter which one you use - check out
-  // http://chaijs.com/guide/styles/ for more info, but it's important
-  // to be consistent (unlike in this file, where we use BOTH expect
-  // and should, but that's just for learning), so once you've gotten
-  // these tests to pass using should syntax, refactor your tests to
-  // use either expect or should, but not both.
-  var should = chai.should();
-
-  it('has a prefix of 54 and a length of 16', function() {
-    detectNetwork('5412345678901234').should.equal('MasterCard');
-  });
-
-  it('has a prefix of 55 and a length of 16', function() {
-    detectNetwork('5512345678901234').should.equal('MasterCard');
-  })
-
 });
 
 describe('Discover', function() {
@@ -195,24 +126,37 @@ describe('China UnionPay', function() {
 
   for(var length = 16; length <= 19; length++) {
     (function(length) {
-      for(var prefix = 622126; prefix < 622295; prefix++) {
-        it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
-          detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal('China UnionPay');
-        });
+      var china6PrefixArray = [];
+      for(var china6Prefix = 622126; china6Prefix <= 622925; china6Prefix++) {
+        china6PrefixArray.push(china6Prefix);
       }
-      for(var prefix = 624; prefix < 626; prefix++) {
-        it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
-          detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal('China UnionPay');
+      china6PrefixArray.forEach(function(china6Prefix) {
+        it('has a prefix of ' + china6Prefix.toString() + ' and a length of ' + length.toString(), function() {
+          detectNetwork(china6Prefix.toString() + addLength(length - china6Prefix.toString().length)).should.equal('China UnionPay');
         });
+      });
+      var china3PrefixArray = [];
+      for(var china3Prefix = 624; china3Prefix <= 626; china3Prefix++) {
+        china3PrefixArray.push(china3Prefix);
       }
-      for(var prefix = 6282; prefix < 6288; prefix++) {
-        it('has a prefix of ' + prefix.toString() + ' and a length of ' + length.toString(), function() {
-          detectNetwork(prefix.toString() + addLength(length - prefix.toString().length)).should.equal('China UnionPay');
+      china3PrefixArray.forEach(function(china3Prefix) {
+        it('has a prefix of ' + china3Prefix.toString() + ' and a length of ' + length.toString(), function() {
+          detectNetwork(china3Prefix.toString() + addLength(length - china3Prefix.toString().length)).should.equal('China UnionPay');
         });
+      });
+      var china4PrefixArray = [];
+      for(var china4Prefix = 6282; china4Prefix <= 6288; china4Prefix++) {
+        china4PrefixArray.push(china4Prefix);
       }
+      china4PrefixArray.forEach(function(china4Prefix) {
+        it('has a prefix of ' + china4Prefix.toString() + ' and a length of ' + length.toString(), function() {
+          detectNetwork(china4Prefix.toString() + addLength(length - china4Prefix.toString().length)).should.equal('China UnionPay');
+        });
+      });
     })(length)
   }
 });
+
 describe('Switch', function() {
   var should = chai.should();
   var prefixArray = ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'];
@@ -227,5 +171,4 @@ describe('Switch', function() {
       });
     })(i)
   }
-
 });
