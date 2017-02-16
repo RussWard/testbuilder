@@ -15,19 +15,19 @@ var detectNetwork = function(cardNumber) {
     return length === 16 && ['51', '52', '53', '54', '55'].includes(cardNumber.substr(0, 2));
   };
   var discover = function(cardNumber) {
+    var result = false;
     if([16, 19].includes(length)) {
       if(cardNumber.substr(0, 4) === '6011') {
-        return true;
+        result = true;
       }
       if(cardNumber.substr(0, 2) === '65') {
-        return true;
+        result = true;
       }
       if(['644', '645', '646', '647', '648', '649'].includes(cardNumber.substr(0, 3))) {
-        return true;
+        result = true;
       }
-    } else {
-      return false;
     }
+    return result;
   };
   var maestro = function(cardNumber) {
     return ['5018', '5020', '5038', '6304'].includes(cardNumber.substr(0, 4)) && [12, 13, 14, 15, 16, 17, 18, 19].includes(length);
